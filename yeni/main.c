@@ -27,7 +27,7 @@ int main()
     
 		double time_spent = 0.0;		
 		clock_t begin = clock();	
-		system("C:/Users/zerha/OneDrive/Masaüstü/18_Mart_Projesi/yeni/kod.exe");
+		//system("C:/Users/zerha/OneDrive/MasaÃ¼stÃ¼/18_Mart_Projesi/yeni/kod.exe");
 		clock_t end = clock();
 		
 		printf("\n\n------------------------------------------------------------\n");
