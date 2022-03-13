@@ -42,7 +42,7 @@ int main()
     	fclose(from);
     	time_spent();
 		
-	}HAZAR SEN ÇOK TATLI BÝR ÝNSANSIN
+	}
     
   return 0;
 }
