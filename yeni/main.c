@@ -4,6 +4,25 @@
 #include <time.h>
 #define DATA_SIZE 1000
 
+void time_spent(){
+	
+		printf("\nOutput:\n");
+    	printf("------------------------------------------------------------\n\n");
+    
+		double time = 0.0;		
+		
+		clock_t begin = clock();	
+		system("C:/Users/zerha/Desktop/BigO_calculator-main/yeni/kod.exe");
+		clock_t end = clock();
+		
+		printf("\n\n------------------------------------------------------------\n");
+	    	
+		time+= (double)(end - begin) / CLOCKS_PER_SEC;
+		
+		printf("\nThe elapsed time is %f seconds\n", time);
+	
+}
+
 int main()
 {
 	char kod_blok,fonksiyon_ismi[DATA_SIZE];
@@ -21,21 +40,7 @@ int main()
     	fputs(from,to);
     	fclose(to);
     	fclose(from);
-    	
-		printf("\nOutput:\n");
-    	printf("------------------------------------------------------------\n\n");
-    
-		double time_spent = 0.0;		
-		clock_t begin = clock();	
-		//system("C:/Users/zerha/OneDrive/Masaüstü/18_Mart_Projesi/yeni/kod.exe");
-		clock_t end = clock();
-		
-		printf("\n\n------------------------------------------------------------\n");
-	    	
-		time_spent += (double)(end - begin) / CLOCKS_PER_SEC;
-	 
-	   	printf("\nThe elapsed time is %f seconds\n", time_spent);
-    	
+    	time_spent();
 		
 	}
     
