@@ -5,7 +5,7 @@
 #define DATA_SIZE 1000
 
 void time_spent(){
-	
+		printf("------------------------------------------------------------");
 		printf("\nOutput:\n");
     	printf("------------------------------------------------------------\n\n");
     
@@ -19,15 +19,14 @@ void time_spent(){
 	    	
 		time+= (double)(end - begin) / CLOCKS_PER_SEC;
 		
-		printf("\nThe elapsed time is %f seconds\n", time);
+		printf("\nVerilen kodun calisma suresi: %f saniye\n\n", time);
 	
 }
 
-int main()
-{
-	char kod_blok,fonksiyon_ismi[DATA_SIZE];
-	int parantez=0,virgul=0,i=0;
-    FILE *from = fopen("for.txt","r");
+void reading_file(){
+	
+	char kod_blok;
+	FILE *from = fopen("for.txt","r");
     FILE *to =fopen("kod.c","w");
 
     if (from == NULL)
@@ -46,9 +45,13 @@ int main()
     	
     	fclose(to);
     	fclose(from);
-    	time_spent();
-		
 	}
+}
+
+int main()
+{
+    time_spent();
+    reading_file();
     
   return 0;
 }
