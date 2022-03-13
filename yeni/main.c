@@ -12,7 +12,7 @@ void time_spent(){
 		double time = 0.0;		
 		
 		clock_t begin = clock();	
-		system("C:/Users/zerha/Desktop/BigO_calculator-main/yeni/kod.exe");
+		system("C:/Users/zerha/OneDrive/Belgeler/GitHub/BigO_calculator/yeni/kod.c");
 		clock_t end = clock();
 		
 		printf("\n\n------------------------------------------------------------\n");
@@ -42,7 +42,7 @@ int main()
     	fclose(from);
     	time_spent();
 		
-	}
+	}HAZAR SEN ÇOK TATLI BÝR ÝNSANSIN
     
   return 0;
 }
