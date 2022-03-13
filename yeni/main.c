@@ -12,7 +12,7 @@ void time_spent(){
 		double time = 0.0;		
 		
 		clock_t begin = clock();	
-		system("C:/Users/zerha/OneDrive/Belgeler/GitHub/BigO_calculator/yeni/kod.c");
+		system("C:/Users/zerha/OneDrive/Belgeler/GitHub/BigO_calculator/yeni/kod.exe");
 		clock_t end = clock();
 		
 		printf("\n\n------------------------------------------------------------\n");
@@ -27,7 +27,7 @@ int main()
 {
 	char kod_blok,fonksiyon_ismi[DATA_SIZE];
 	int parantez=0,virgul=0,i=0;
-    FILE *from = fopen("for.txt", "r");
+    FILE *from = fopen("for.txt","r");
     FILE *to =fopen("kod.c","w");
 
     if (from == NULL)
@@ -37,7 +37,13 @@ int main()
     }
     else{
     	
-    	fputs(from,to);
+    	do{
+			kod_blok=getc(from);
+			if( kod_blok!=EOF){
+				putc(kod_blok,to);
+			}
+		}while(kod_blok!=EOF);
+    	
     	fclose(to);
     	fclose(from);
     	time_spent();
