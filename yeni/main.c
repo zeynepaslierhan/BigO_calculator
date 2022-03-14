@@ -24,7 +24,7 @@ void time_spent(){
 	    	
 		time+= (double)(end - begin) / CLOCKS_PER_SEC;
 		
-		printf("\nVerilen kodun calisma suresi: %f saniye\n\n", time);
+		printf("\nVerilen kodun calisma suresi: %f saniye\n\n",time);
 	
 }
 
@@ -37,7 +37,6 @@ void reading_file(){
     if (from == NULL)
     {
         printf("Error: could not open file %s", "for.txt");
-        return 1;
     }
     else{
     	
@@ -55,43 +54,34 @@ void reading_file(){
 
 void counting_keywords(){
 	
-	char kod;
-	char *keywords=(char*)malloc(DATA_SIZE*sizeof(char));
+	char kod[DATA_SIZE];
+	char keywords[DATA_SIZE];
 	FILE *from = fopen("for.txt","r");
     if (from == NULL)
     {
         printf("\nError: could not open file %s\n", "for.txt");
     }else{
-		int i=0;
-		do{
-			kod=getc(from);
-			if(kod!=EOF){
-				printf("%c",kod);//okuma kontrolü
-				if(kod!=' '&&kod!='('&&kod!='\n'&&kod!='{'){
-					keywords[i]=kod;
-					i++;
-				}else if(keywords[0]=='f'&&keywords[1]=='o'&&keywords[2]=='r'){
+		int i;
+		while(fscanf(from,"%s",kod)!=EOF){
+				for(i=0;kod[i]!='\0';i++){
+					keywords[i]=kod[i];
+				}
+				if(keywords[0]=='f'&&keywords[1]=='o'&&keywords[2]=='r'){
 					cfor++;
-					i=0;
-					printf("\n\n%d",cfor);//kontrol
-					free(keywords);
-				}else{
-					i=0;
-					free(keywords);
+					printf("\n!!!!%d",cfor);//kontrol
 				}
 			}
-		}while(kod!=EOF);
-	}
-	
+		}
 }
 
 int main(){
+	
     
 	reading_file();
 	time_spent();
     
     counting_keywords();
-    printf("%d",cfor);//kontrol
+    printf("\n%d",cfor);//kontrol
     
   return 0;
 }
