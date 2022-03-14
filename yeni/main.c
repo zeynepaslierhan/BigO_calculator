@@ -4,6 +4,10 @@
 #include <time.h>
 #define DATA_SIZE 1000
 
+static int cfor,cwhile,cdoWhile,cint,parantez,virgul;
+
+
+
 void time_spent(){
 	
 		printf("------------------------------------------------------------");
@@ -49,11 +53,45 @@ void reading_file(){
 	}
 }
 
+void counting_keywords(){
+	
+	char kod;
+	char *keywords=(char*)malloc(DATA_SIZE*sizeof(char));
+	FILE *from = fopen("for.txt","r");
+    if (from == NULL)
+    {
+        printf("\nError: could not open file %s\n", "for.txt");
+    }else{
+		int i=0;
+		do{
+			kod=getc(from);
+			if(kod!=EOF){
+				printf("%c",kod);//okuma kontrolü
+				if(kod!=' '&&kod!='('&&kod!='\n'&&kod!='{'){
+					keywords[i]=kod;
+					i++;
+				}else if(keywords[0]=='f'&&keywords[1]=='o'&&keywords[2]=='r'){
+					cfor++;
+					i=0;
+					printf("\n\n%d",cfor);//kontrol
+					free(keywords);
+				}else{
+					i=0;
+					free(keywords);
+				}
+			}
+		}while(kod!=EOF);
+	}
+	
+}
 
 int main(){
     
+	reading_file();
 	time_spent();
-    reading_file();
+    
+    counting_keywords();
+    printf("%d",cfor);//kontrol
     
   return 0;
 }
