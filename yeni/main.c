@@ -5,6 +5,7 @@
 #define DATA_SIZE 1000
 
 void time_spent(){
+	
 		printf("------------------------------------------------------------");
 		printf("\nOutput:\n");
     	printf("------------------------------------------------------------\n\n");
@@ -48,9 +49,10 @@ void reading_file(){
 	}
 }
 
-int main()
-{
-    time_spent();
+
+int main(){
+    
+	time_spent();
     reading_file();
     
   return 0;
