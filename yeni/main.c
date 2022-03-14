@@ -68,7 +68,10 @@ void counting_keywords(){
 				}
 				if(keywords[0]=='f'&&keywords[1]=='o'&&keywords[2]=='r'){
 					cfor++;
-					printf("\n!!!!%d",cfor);//kontrol
+				}else if(keywords[0]=='w'&&keywords[1]=='h'&&keywords[2]=='i'&&keywords[3]=='l'&&keywords[4]=='e'){
+					cwhile++;
+				}else if(keywords[0]=='d'&&keywords[1]=='o'&&keywords[2]=='{'){
+					cdoWhile++;
 				}
 			}
 		}
@@ -81,7 +84,6 @@ int main(){
 	time_spent();
     
     counting_keywords();
-    printf("\n%d",cfor);//kontrol
     
   return 0;
 }
