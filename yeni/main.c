@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-#define DATA_SIZE 1000
+#define DATA_SIZE 100
 
 static int cfor,cwhile,cdoWhile,cint,parantez,virgul;
 
