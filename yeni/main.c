@@ -76,6 +76,9 @@ void counting_keywords(char *bigO){
 							parameters[i]=kod[i];
 						}
 						printf("%s\n",parameters);
+						
+						calculating_BigO(bigO,parameters);
+							
 					}
 				}else if(keywords[0]=='w'&&keywords[1]=='h'&&keywords[2]=='i'&&keywords[3]=='l'&&keywords[4]=='e'){
 					cwhile++;
@@ -84,9 +87,46 @@ void counting_keywords(char *bigO){
 				}
 			}
 		}
+	
 	free(kod);
 	free(keywords);
 	free(parameters);
+}
+
+
+void calculating_BigO(char *bigO,char *parameters){
+	int i=0,j=0,semicolon=0;
+	char *condition=(char*)malloc(DATA_SIZE*sizeof(char));
+	
+	for(i=0;parameters[i]!='\0';i++){//for parametresi için
+			if(semicolon!=1&&semicolon!=2&&parameters[i]!=';'&&parameters[i]!='('){
+				printf("%c",parameters[i]);
+				continue;
+			}else if(parameters[i]==';'){
+				printf(" %c ",parameters[i]);
+				semicolon++;
+				if(semicolon==2){
+					condition[j]='$';//for döngüsündeki kosul ile islemi condition dizisinde birbirinden ayrildi.
+					j++;
+				}
+				continue;
+			}else if(semicolon==1||semicolon==2){
+				if(parameters[i]!=')'){
+					condition[j]=parameters[i];
+					printf("%c",condition[j]);
+					j++;
+				}else{
+					condition[j]='$';//for döngüsündeki kosul ile islemi condition dizisinde birbirinden ayrildi.
+					condition[++j]='\0';//condition sonuna bitti isareti konuldu.
+				}
+			}
+	}
+	printf("\n%s\n",condition);
+	
+	
+	
+	free(condition);
+	
 }
 
 int main(){
