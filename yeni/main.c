@@ -57,10 +57,14 @@ void counting_keywords(char *bigO){
 	char *keywords=(char*)malloc(DATA_SIZE*sizeof(char));
 	char *parameters=(char*)malloc(DATA_SIZE*sizeof(char));
 	
+<<<<<<< HEAD
 	FILE *from = fopen("for.txt","r");
+=======
+	FILE *from = fopen("for.txt","r");
+>>>>>>> a4c69e9316da3a20159bc43d94addf4aab4892a6
     if (from == NULL)
     {
-        printf("\nError: could not open file %s\n", "while.txt");
+        printf("\nError: could not open file %s\n", "doWhile.txt");
     }else{
 		int i=0;
 		while(fscanf(from,"%s",kod)!=EOF){
@@ -94,6 +98,15 @@ void counting_keywords(char *bigO){
 					
 				}else if(keywords[0]=='d'&&keywords[1]=='o'&&keywords[2]=='{'){
 					cdoWhile++;
+					printf("\n%d\n",cdoWhile);
+					if(cdoWhile!=0){
+						fscanf(from,"%s",kod);
+						for(i=0;kod[i]!='}';i++){
+							parameters[i]=kod[i];
+
+						}
+						printf("%s\n",parameters);
+					}
 				}
 			}
 		}
@@ -108,7 +121,7 @@ void calculating_BigO(char *bigO,char *parameters){
 	char *condition=(char*)malloc(DATA_SIZE*sizeof(char));
 	
 	if(cfor!=0&&cwhile==0&&cdoWhile==0){
-		for(i=0;parameters[i]!='\0';i++){//for parametresi için
+		for(i=0;parameters[i]!='\0';i++){//for parametresi iï¿½in
 				if(semicolon!=1&&semicolon!=2&&parameters[i]!=';'&&parameters[i]!='('){
 					printf("%c",parameters[i]);
 					continue;
@@ -116,7 +129,7 @@ void calculating_BigO(char *bigO,char *parameters){
 					printf(" %c ",parameters[i]);
 					semicolon++;
 					if(semicolon==2){
-						condition[j]='$';//for döngüsündeki kosul ile islemi condition dizisinde birbirinden ayrildi.
+						condition[j]='$';//for dï¿½ngï¿½sï¿½ndeki kosul ile islemi condition dizisinde birbirinden ayrildi.
 						j++;
 					}
 					continue;
@@ -126,7 +139,7 @@ void calculating_BigO(char *bigO,char *parameters){
 						printf("%c",condition[j]);
 						j++;
 					}else{
-						condition[j]='$';//for döngüsündeki kosul ile islemi condition dizisinde birbirinden ayrildi.
+						condition[j]='$';//for dï¿½ngï¿½sï¿½ndeki kosul ile islemi condition dizisinde birbirinden ayrildi.
 						condition[++j]='\0';//condition sonuna bitti isareti konuldu.
 					}
 				}
@@ -134,17 +147,17 @@ void calculating_BigO(char *bigO,char *parameters){
 		printf("\n%s\n",condition);
 		
 		
-		cfor=0;//parametrenin hangi loop için kullanildigini anlamak için.
+		cfor=0;//parametrenin hangi loop iï¿½in kullanildigini anlamak iï¿½in.
 		printf("\n\n!!!!UYARI: calculating_bigO fonksiyonunda cfor=0 yapildi.!!!!!\n");		
 	}else if(cfor==0&&cwhile!=0&&cdoWhile==0){
 		
-		for(i=0;parameters[i]!='\0';i++){//for parametresi için
+		for(i=0;parameters[i]!='\0';i++){//for parametresi iï¿½in
 				if(parameters[i]=='('){
 					printf(" /%c/",parameters[i]);
 					continue;
 				}else if(parameters[i]==')'){
 					printf("/%c/",parameters[i]);
-					condition[j]='$';//for döngüsündeki kosul ile islemi condition dizisinde birbirinden ayrildi.
+					condition[j]='$';//for dï¿½ngï¿½sï¿½ndeki kosul ile islemi condition dizisinde birbirinden ayrildi.
 					condition[++j]='\0';//condition sonuna bitti isareti konuldu.
 				}else{
 					condition[j]=parameters[i];
@@ -155,7 +168,7 @@ void calculating_BigO(char *bigO,char *parameters){
 				
 		printf("\n%s\n",condition);
 		
-		cwhile=0;//parametrenin hangi loop için kullanildigini anlamak için.
+		cwhile=0;//parametrenin hangi loop iï¿½in kullanildigini anlamak iï¿½in.
 		printf("\n\n!!!!UYARI: calculating_bigO fonksiyonunda cwhile=0 yapildi.!!!!!\n");		
 	}
 	
