@@ -56,12 +56,8 @@ void counting_keywords(char *bigO){
 	char *kod=(char*)malloc(DATA_SIZE*sizeof(char));
 	char *keywords=(char*)malloc(DATA_SIZE*sizeof(char));
 	char *parameters=(char*)malloc(DATA_SIZE*sizeof(char));
-	
-<<<<<<< HEAD
-	FILE *from = fopen("for.txt","r");
-=======
-	FILE *from = fopen("for.txt","r");
->>>>>>> a4c69e9316da3a20159bc43d94addf4aab4892a6
+
+	FILE *from = fopen("doWhile.txt","r");
     if (from == NULL)
     {
         printf("\nError: could not open file %s\n", "doWhile.txt");
@@ -96,16 +92,15 @@ void counting_keywords(char *bigO){
 						calculating_BigO(bigO,parameters);
 					}
 					
-				}else if(keywords[0]=='d'&&keywords[1]=='o'&&keywords[2]=='{'){
+				}else if(keywords[0]=='}'&&keywords[1]=='w'&&keywords[2]=='h'&&keywords[3]=='i'&&keywords[4]=='l'&&keywords[5]=='e'){
 					cdoWhile++;
 					printf("\n%d\n",cdoWhile);
 					if(cdoWhile!=0){
-						fscanf(from,"%s",kod);
-						for(i=0;kod[i]!='}';i++){
+						for(i=0;kod[i]!=';';i++){
 							parameters[i]=kod[i];
-
 						}
 						printf("%s\n",parameters);
+						calculating_BigO(bigO,parameters);
 					}
 				}
 			}
@@ -117,10 +112,11 @@ void counting_keywords(char *bigO){
 
 
 void calculating_BigO(char *bigO,char *parameters){
-	int i=0,j=0,semicolon=0;
+	int i=0,j=0,kontrol=0,semicolon=0;
 	char *condition=(char*)malloc(DATA_SIZE*sizeof(char));
 	
 	if(cfor!=0&&cwhile==0&&cdoWhile==0){
+		
 		for(i=0;parameters[i]!='\0';i++){//for parametresi i�in
 				if(semicolon!=1&&semicolon!=2&&parameters[i]!=';'&&parameters[i]!='('){
 					printf("%c",parameters[i]);
@@ -149,6 +145,8 @@ void calculating_BigO(char *bigO,char *parameters){
 		
 		cfor=0;//parametrenin hangi loop i�in kullanildigini anlamak i�in.
 		printf("\n\n!!!!UYARI: calculating_bigO fonksiyonunda cfor=0 yapildi.!!!!!\n");		
+		
+		
 	}else if(cfor==0&&cwhile!=0&&cdoWhile==0){
 		
 		for(i=0;parameters[i]!='\0';i++){//for parametresi i�in
@@ -169,13 +167,30 @@ void calculating_BigO(char *bigO,char *parameters){
 		printf("\n%s\n",condition);
 		
 		cwhile=0;//parametrenin hangi loop i�in kullanildigini anlamak i�in.
-		printf("\n\n!!!!UYARI: calculating_bigO fonksiyonunda cwhile=0 yapildi.!!!!!\n");		
+		printf("\n\n!!!!UYARI: calculating_bigO fonksiyonunda cwhile=0 yapildi.!!!!!\n");	
+			
+	}else if(cfor==0&&cwhile==0&&cdoWhile!=0){
+	
+		for(i=0;parameters[i]!=')';i++){//for parametresi i�in
+				if(parameters[i]!='('&&kontrol==0){
+					i++;
+					continue;
+				}else if(parameters[i]=='('){
+					kontrol++;
+				}else{
+					condition[j]=parameters[i];
+					j++;
+				}
+		}
+				
+		printf("\n%s\n",condition);
+		
+		cdoWhile=0;//parametrenin hangi loop i�in kullanildigini anlamak i�in.
+		printf("\n\n!!!!UYARI: calculating_bigO fonksiyonunda cdoWhile=0 yapildi.!!!!!\n");	
+	
 	}
 	
-	
-	
 	free(condition);
-	
 }
 
 int main(){
