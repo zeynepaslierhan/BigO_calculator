@@ -68,6 +68,7 @@ void counting_keywords(){
 				}
 				if(keywords[0]=='f'&&keywords[1]=='o'&&keywords[2]=='r'){
 					cfor++;
+					printf("%d ",cfor);
 				}else if(keywords[0]=='w'&&keywords[1]=='h'&&keywords[2]=='i'&&keywords[3]=='l'&&keywords[4]=='e'){
 					cwhile++;
 				}else if(keywords[0]=='d'&&keywords[1]=='o'&&keywords[2]=='{'){
@@ -84,7 +85,6 @@ int main(){
     
 	reading_file();
 	time_spent();
-    
     counting_keywords();
     
   return 0;
