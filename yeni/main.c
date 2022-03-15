@@ -56,6 +56,8 @@ void counting_keywords(){
 	
 	char *kod=(char*)malloc(DATA_SIZE*sizeof(char));
 	char *keywords=(char*)malloc(DATA_SIZE*sizeof(char));
+	char *parameters=(char*)malloc(DATA_SIZE*sizeof(char));
+	
 	FILE *from = fopen("for.txt","r");
     if (from == NULL)
     {
@@ -78,6 +80,7 @@ void counting_keywords(){
 		}
 	free(kod);
 	free(keywords);
+	free(parameters);
 }
 
 int main(){
