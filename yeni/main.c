@@ -76,8 +76,8 @@ void counting_keywords(char *bigO){
 							parameters[i]=kod[i];
 						}
 						printf("%s\n",parameters);
-						
 						calculating_BigO(bigO,parameters);
+						free(parameters);
 							
 					}
 				}else if(keywords[0]=='w'&&keywords[1]=='h'&&keywords[2]=='i'&&keywords[3]=='l'&&keywords[4]=='e'){
@@ -88,7 +88,9 @@ void counting_keywords(char *bigO){
 						for(i=0;kod[i]!='{';i++){
 							parameters[i]=kod[i];
 						}
+						parameters[i]='\0';
 						printf("%s\n",parameters);
+						free(parameters);
 					}
 				}else if(keywords[0]=='d'&&keywords[1]=='o'&&keywords[2]=='{'){
 					cdoWhile++;
@@ -98,7 +100,6 @@ void counting_keywords(char *bigO){
 	
 	free(kod);
 	free(keywords);
-	free(parameters);
 }
 
 
