@@ -4,8 +4,7 @@
 #include <time.h>
 #define DATA_SIZE 100
 
-static int cfor,cwhile,cdoWhile,cint,parantez,virgul;
-
+static int cfor=0,cwhile=0,cdoWhile=0;
 
 
 void time_spent(){
@@ -52,7 +51,7 @@ void reading_file(){
 	}
 }
 
-void counting_keywords(){
+void counting_keywords(char *bigO){
 	
 	char *kod=(char*)malloc(DATA_SIZE*sizeof(char));
 	char *keywords=(char*)malloc(DATA_SIZE*sizeof(char));
@@ -76,7 +75,7 @@ void counting_keywords(){
 						for(i=0;kod[i]!='{';i++){
 							parameters[i]=kod[i];
 						}
-						printf("%s\n",parameters);	
+						printf("%s\n",parameters);
 					}
 				}else if(keywords[0]=='w'&&keywords[1]=='h'&&keywords[2]=='i'&&keywords[3]=='l'&&keywords[4]=='e'){
 					cwhile++;
@@ -92,10 +91,11 @@ void counting_keywords(){
 
 int main(){
 	
-    
+    char *bigO=(char*)malloc(DATA_SIZE*(sizeof(char)));
 	reading_file();
 	time_spent();
-    counting_keywords();
+    counting_keywords(bigO);
     
+    free(bigO);
   return 0;
 }
