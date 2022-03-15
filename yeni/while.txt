@@ -1,7 +1,7 @@
 #include <stdio.h>
 int main(){
 	int i=-4;
-	while (i<0&&i>-5){
+	while (i&&&&<=5){
 		i++;
         	printf("%d", i);
 		while (i>=-2){
