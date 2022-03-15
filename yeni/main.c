@@ -57,7 +57,7 @@ void counting_keywords(char *bigO){
 	char *keywords=(char*)malloc(DATA_SIZE*sizeof(char));
 	char *parameters=(char*)malloc(DATA_SIZE*sizeof(char));
 	
-	FILE *from = fopen("while.txt","r");
+	FILE *from = fopen("for.txt","r");
     if (from == NULL)
     {
         printf("\nError: could not open file %s\n", "while.txt");
@@ -77,7 +77,6 @@ void counting_keywords(char *bigO){
 						}
 						printf("%s\n",parameters);
 						calculating_BigO(bigO,parameters);
-						free(parameters);
 							
 					}
 				}else if(keywords[0]=='w'&&keywords[1]=='h'&&keywords[2]=='i'&&keywords[3]=='l'&&keywords[4]=='e'){
@@ -90,14 +89,15 @@ void counting_keywords(char *bigO){
 						}
 						parameters[i]='\0';
 						printf("%s\n",parameters);
-						free(parameters);
+						calculating_BigO(bigO,parameters);
 					}
+					
 				}else if(keywords[0]=='d'&&keywords[1]=='o'&&keywords[2]=='{'){
 					cdoWhile++;
 				}
 			}
 		}
-	
+	free(parameters);
 	free(kod);
 	free(keywords);
 }
@@ -136,7 +136,28 @@ void calculating_BigO(char *bigO,char *parameters){
 		
 		cfor=0;//parametrenin hangi loop için kullanildigini anlamak için.
 		printf("\n\n!!!!UYARI: calculating_bigO fonksiyonunda cfor=0 yapildi.!!!!!\n");		
-	}	
+	}else if(cfor==0&&cwhile!=0&&cdoWhile==0){
+		
+		for(i=0;parameters[i]!='\0';i++){//for parametresi için
+				if(parameters[i]=='('){
+					printf(" /%c/",parameters[i]);
+					continue;
+				}else if(parameters[i]==')'){
+					printf("/%c/",parameters[i]);
+					condition[j]='$';//for döngüsündeki kosul ile islemi condition dizisinde birbirinden ayrildi.
+					condition[++j]='\0';//condition sonuna bitti isareti konuldu.
+				}else{
+					condition[j]=parameters[i];
+					printf("%c",condition[j]);
+					j++;
+				}
+		}
+				
+		printf("\n%s\n",condition);
+		
+		cwhile=0;//parametrenin hangi loop için kullanildigini anlamak için.
+		printf("\n\n!!!!UYARI: calculating_bigO fonksiyonunda cwhile=0 yapildi.!!!!!\n");		
+	}
 	
 	
 	
