@@ -63,14 +63,21 @@ void counting_keywords(){
     {
         printf("\nError: could not open file %s\n", "for.txt");
     }else{
-		int i;
+		int i=0;
 		while(fscanf(from,"%s",kod)!=EOF){
 				for(i=0;kod[i]!='\0';i++){
 					keywords[i]=kod[i];
 				}
 				if(keywords[0]=='f'&&keywords[1]=='o'&&keywords[2]=='r'){
 					cfor++;
-					printf("%d ",cfor);
+					printf("\n%d\n", cfor);
+					if(cfor!=0){
+						fscanf(from,"%s",kod);
+						for(i=0;kod[i]!='{';i++){
+							parameters[i]=kod[i];
+						}
+						printf("%s\n",parameters);	
+					}
 				}else if(keywords[0]=='w'&&keywords[1]=='h'&&keywords[2]=='i'&&keywords[3]=='l'&&keywords[4]=='e'){
 					cwhile++;
 				}else if(keywords[0]=='d'&&keywords[1]=='o'&&keywords[2]=='{'){
