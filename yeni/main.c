@@ -69,7 +69,7 @@ void counting_keywords(char *bigO){
 				}
 				if(keywords[0]=='f'&&keywords[1]=='o'&&keywords[2]=='r'){
 					cfor++;
-					printf("\n%d\n", cfor);
+					printf("\ncfor: %d\n", cfor);
 					if(cfor!=0){
 						fscanf(from,"%s",kod);
 						for(i=0;kod[i]!='{';i++){
@@ -98,30 +98,36 @@ void calculating_BigO(char *bigO,char *parameters){
 	int i=0,j=0,semicolon=0;
 	char *condition=(char*)malloc(DATA_SIZE*sizeof(char));
 	
-	for(i=0;parameters[i]!='\0';i++){//for parametresi için
-			if(semicolon!=1&&semicolon!=2&&parameters[i]!=';'&&parameters[i]!='('){
-				printf("%c",parameters[i]);
-				continue;
-			}else if(parameters[i]==';'){
-				printf(" %c ",parameters[i]);
-				semicolon++;
-				if(semicolon==2){
-					condition[j]='$';//for döngüsündeki kosul ile islemi condition dizisinde birbirinden ayrildi.
-					j++;
+	if(cfor!=0&&cwhile==0&&cdoWhile==0){
+		for(i=0;parameters[i]!='\0';i++){//for parametresi için
+				if(semicolon!=1&&semicolon!=2&&parameters[i]!=';'&&parameters[i]!='('){
+					printf("%c",parameters[i]);
+					continue;
+				}else if(parameters[i]==';'){
+					printf(" %c ",parameters[i]);
+					semicolon++;
+					if(semicolon==2){
+						condition[j]='$';//for döngüsündeki kosul ile islemi condition dizisinde birbirinden ayrildi.
+						j++;
+					}
+					continue;
+				}else if(semicolon==1||semicolon==2){
+					if(parameters[i]!=')'){
+						condition[j]=parameters[i];
+						printf("%c",condition[j]);
+						j++;
+					}else{
+						condition[j]='$';//for döngüsündeki kosul ile islemi condition dizisinde birbirinden ayrildi.
+						condition[++j]='\0';//condition sonuna bitti isareti konuldu.
+					}
 				}
-				continue;
-			}else if(semicolon==1||semicolon==2){
-				if(parameters[i]!=')'){
-					condition[j]=parameters[i];
-					printf("%c",condition[j]);
-					j++;
-				}else{
-					condition[j]='$';//for döngüsündeki kosul ile islemi condition dizisinde birbirinden ayrildi.
-					condition[++j]='\0';//condition sonuna bitti isareti konuldu.
-				}
-			}
-	}
-	printf("\n%s\n",condition);
+		}
+		printf("\n%s\n",condition);
+		
+		
+		cfor=0;//parametrenin hangi loop için kullanildigini anlamak için.
+		printf("\n\n!!!!UYARI: calculating_bigO fonksiyonunda cfor=0 yapildi.!!!!!\n");		
+	}	
 	
 	
 	
