@@ -4,7 +4,7 @@
 #include <time.h>
 #define DATA_SIZE 100
 
-static int cfor=0,cwhile=0,cdoWhile=0;
+static int cfor=0,cwhile=0,cdoWhile=0,parantezK=0;
 
 
 void time_spent(){
@@ -57,7 +57,7 @@ void counting_keywords(char *bigO){
 	char *keywords=(char*)malloc(DATA_SIZE*sizeof(char));
 	char *parameters=(char*)malloc(DATA_SIZE*sizeof(char));
 
-	FILE *from = fopen("doWhile.txt","r");
+	FILE *from = fopen("for.txt","r");
     if (from == NULL)
     {
         printf("\nError: could not open file %s\n", "doWhile.txt");
@@ -66,6 +66,9 @@ void counting_keywords(char *bigO){
 		while(fscanf(from,"%s",kod)!=EOF){
 				for(i=0;kod[i]!='\0';i++){
 					keywords[i]=kod[i];
+				}
+				if(kod[0]=='}'){
+					parantezK++;
 				}
 				if(keywords[0]=='f'&&keywords[1]=='o'&&keywords[2]=='r'){
 					cfor++;
@@ -108,6 +111,33 @@ void counting_keywords(char *bigO){
 	free(parameters);
 	free(kod);
 	free(keywords);
+}
+
+
+
+void condition_integerValue(char *condition, int semicolon){
+	int *condition_i=(int*)malloc(4*sizeof(int));// 0. index='<' 1. index ='>' 2. index ='=' 3. index= '!'
+	int i=0;
+	for(i=0;i<4;i++){
+		condition_i[i]=0;
+	}
+	if(semicolon!=0){
+		for(i=0;condition[i]!='$';i++){
+		if(condition[i]=='='){
+			condition_i[2]++;	
+		}else if(condition_i[i]=='<'){
+			condition_i[0]++;
+		}else if(condition_i[i]=='>'){
+			condition_i[1]++;
+		}else if(condition[i]=='!'){
+			condition_i[3]++;
+		}
+		if(condition[i]=='n'){
+			
+		}}
+	}else{
+		
+	}
 }
 
 
