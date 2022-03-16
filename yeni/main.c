@@ -57,7 +57,7 @@ void counting_keywords(char *bigO){
 	char *keywords=(char*)malloc(DATA_SIZE*sizeof(char));
 	char *parameters=(char*)malloc(DATA_SIZE*sizeof(char));
 
-	FILE *from = fopen("for.txt","r");
+	FILE *from = fopen("cdoWhile.txt","r");
     if (from == NULL)
     {
         printf("\nError: could not open file %s\n", "doWhile.txt");
@@ -99,10 +99,13 @@ void counting_keywords(char *bigO){
 					cdoWhile++;
 					printf("\n%d\n",cdoWhile);
 					if(cdoWhile!=0){
+						fscanf(from,"%s",kod);
 						for(i=0;kod[i]!=';';i++){
 							parameters[i]=kod[i];
 						}
 						printf("%s\n",parameters);
+
+						
 						calculating_BigO(bigO,parameters);
 					}
 				}
