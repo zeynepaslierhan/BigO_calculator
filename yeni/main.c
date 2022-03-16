@@ -57,12 +57,20 @@ void counting_keywords(char *bigO){
 	char *keywords=(char*)malloc(DATA_SIZE*sizeof(char));
 	char *parameters=(char*)malloc(DATA_SIZE*sizeof(char));
 
-	FILE *from = fopen("cdoWhile.txt","r");
+<<<<<<< HEAD
+	FILE *from = fopen("doWhile.txt","r");
+=======
+	FILE *from = fopen("doWhile.txt","r");
+>>>>>>> b6ba4d9f3b4de6f48d5373641748a011346993a4
     if (from == NULL)
     {
         printf("\nError: could not open file %s\n", "doWhile.txt");
     }else{
 		int i=0;
+		fseek(from,0,SEEK_END);
+		printf("%d \n",ftell(from));
+		rewind(from);
+		
 		while(fscanf(from,"%s",kod)!=EOF){
 				for(i=0;kod[i]!='\0';i++){
 					keywords[i]=kod[i];
@@ -97,6 +105,7 @@ void counting_keywords(char *bigO){
 					
 				}else if(keywords[0]=='}'&&keywords[1]=='w'&&keywords[2]=='h'&&keywords[3]=='i'&&keywords[4]=='l'&&keywords[5]=='e'){
 					cdoWhile++;
+					printf("%d \n",ftell(from));
 					printf("\n%d\n",cdoWhile);
 					if(cdoWhile!=0){
 						fscanf(from,"%s",kod);
