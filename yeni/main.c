@@ -57,11 +57,7 @@ void counting_keywords(char *bigO){
 	char *keywords=(char*)malloc(DATA_SIZE*sizeof(char));
 	char *parameters=(char*)malloc(DATA_SIZE*sizeof(char));
 
-<<<<<<< HEAD
 	FILE *from = fopen("doWhile.txt","r");
-=======
-	FILE *from = fopen("doWhile.txt","r");
->>>>>>> b6ba4d9f3b4de6f48d5373641748a011346993a4
     if (from == NULL)
     {
         printf("\nError: could not open file %s\n", "doWhile.txt");
