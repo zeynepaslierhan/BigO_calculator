@@ -4,7 +4,7 @@
 #include <time.h>
 #define DATA_SIZE 100
 
-static int cfor=0,cwhile=0,cdoWhile=0,parantezK=0;
+static int cfor=0,cwhile=0,cdoWhile=0,parantezK=0,bigOLen=0;
 
 
 void time_spent(){
@@ -57,15 +57,15 @@ void counting_keywords(char *bigO){
 	char *keywords=(char*)malloc(DATA_SIZE*sizeof(char));
 	char *parameters=(char*)malloc(DATA_SIZE*sizeof(char));
 	char *fonksiyon_ismi=(char*)malloc(DATA_SIZE*sizeof(char));
-
-	FILE *from = fopen("recursive.txt","r");
+	
+	FILE *from = fopen("for.txt","r");
     if (from == NULL)
     {
         printf("\nError: could not open file %s\n", "doWhile.txt");
     }else{
 		int i=0, kontrol=0;
 		fseek(from,0,SEEK_END);
-		printf("\nbu dosya su kadar karakter icerir: %d \n",ftell(from));
+		printf("\n\nIcerdigi karakter sayisi: %d \n",ftell(from));
 		rewind(from);
 		
 		while(fscanf(from,"%s",kod)!=EOF){
@@ -77,42 +77,39 @@ void counting_keywords(char *bigO){
 				}
 				if(keywords[0]=='f'&&keywords[1]=='o'&&keywords[2]=='r'){
 					cfor++;
-					printf("\ncfor: %d\n", cfor);
+					printf("\n\nFor\n");
+					printf("Kosul ve islemi:");
 					if(cfor!=0){
 						fscanf(from,"%s",kod);
 						for(i=0;kod[i]!='{';i++){
 							parameters[i]=kod[i];
 						}
-						printf("%s\n",parameters);
+						printf("\n%s\n",parameters);
 						calculating_BigO(bigO,parameters);
 					kontrol++;		
 					}
 				}else if(keywords[0]=='w'&&keywords[1]=='h'&&keywords[2]=='i'&&keywords[3]=='l'&&keywords[4]=='e'){
 					cwhile++;
-					printf("\n%d\n",cwhile);
+					printf("\nWhile\n");
+					printf("Kosul ve islemi:\n");
 					if(cwhile!=0){
-						fscanf(from,"%s",kod);
 						for(i=0;kod[i]!='{';i++){
 							parameters[i]=kod[i];
 						}
 						parameters[i]='\0';
-						printf("%s\n",parameters);
+						printf("\n%s\n",parameters);
 						calculating_BigO(bigO,parameters);
 					}
 					kontrol++;
 					
 				}else if(keywords[0]=='}'&&keywords[1]=='w'&&keywords[2]=='h'&&keywords[3]=='i'&&keywords[4]=='l'&&keywords[5]=='e'){
 					cdoWhile++;
-					printf("\ndoWhile komutunun bittigi karakter: %d \n",ftell(from));
-					printf("\n%d\n",cdoWhile);
+					printf("\nDo While\n");
+					printf("Kosul ve islemi:\n");
 					if(cdoWhile!=0){
-						fscanf(from,"%s",kod);
 						for(i=0;kod[i]!=';';i++){
 							parameters[i]=kod[i];
 						}
-						printf("%s\n",parameters);
-
-						
 						calculating_BigO(bigO,parameters);
 					}
 					kontrol++;
@@ -134,8 +131,7 @@ void counting_keywords(char *bigO){
 			printf("\nRecursive fonksiyonun döndürdügü deger, ismi ve parametresi: %s)\n",fonksiyon_ismi);
 			free(kod);
 			free(keywords);
-			
-			
+				
 		}
 			
 	
@@ -150,29 +146,24 @@ void counting_keywords(char *bigO){
 
 
 
-void condition_integerValue(char *condition, int semicolon){
-	int *condition_i=(int*)malloc(4*sizeof(int));// 0. index='<' 1. index ='>' 2. index ='=' 3. index= '!'
+int condition_integerValue(char *condition, int semicolon){
+
 	int i=0;
-	for(i=0;i<4;i++){
-		condition_i[i]=0;
-	}
-	if(semicolon!=0){
+	if(semicolon!=0){//for icin
 		for(i=0;condition[i]!='$';i++){
-		if(condition[i]=='='){
-			condition_i[2]++;	
-		}else if(condition_i[i]=='<'){
-			condition_i[0]++;
-		}else if(condition_i[i]=='>'){
-			condition_i[1]++;
-		}else if(condition[i]=='!'){
-			condition_i[3]++;
+			if(condition[i]=='+'||condition[i]=='-'){
+				return 1;
+			}else if(condition[i]=='*'||condition[i]=='/'){
+				return 2;//logn
+			}else{
+				printf("\n!\n");
+				continue;
+			}
 		}
-		if(condition[i]=='n'){
-			
-		}}
-	}else{
-		
+	}else{//diger looplar
+		return 1;
 	}
+	
 }
 
 
@@ -189,12 +180,11 @@ void calculating_BigO(char *bigO,char *parameters){
 				}else if(parameters[i]==';'){
 					printf(" %c ",parameters[i]);
 					semicolon++;
-					if(semicolon==2){
-						condition[j]='$';//for dï¿½ngï¿½sï¿½ndeki kosul ile islemi condition dizisinde birbirinden ayrildi.
-						j++;
-					}
 					continue;
-				}else if(semicolon==1||semicolon==2){
+				}else if(semicolon==1){
+					printf("%c",parameters[i]);
+					continue;
+				}else if(semicolon==2){
 					if(parameters[i]!=')'){
 						condition[j]=parameters[i];
 						printf("%c",condition[j]);
@@ -205,11 +195,14 @@ void calculating_BigO(char *bigO,char *parameters){
 					}
 				}
 		}
-		printf("\n%s\n",condition);
+		if(condition_integerValue(condition,semicolon)==1){
+			bigO[bigOLen]='n';
+		}else{
+			bigO[bigOLen]='$';
+		}
+		bigOLen++;
 		
-		
-		cfor=0;//parametrenin hangi loop iï¿½in kullanildigini anlamak iï¿½in.
-		printf("\n\n!!!!UYARI: calculating_bigO fonksiyonunda cfor=0 yapildi.!!!!!\n");		
+		cfor=0;//parametrenin hangi loop iï¿½in kullanildigini anlamak iï¿½in.	
 		
 		
 	}else if(cfor==0&&cwhile!=0&&cdoWhile==0){
@@ -228,11 +221,15 @@ void calculating_BigO(char *bigO,char *parameters){
 					j++;
 				}
 		}
-				
-		printf("\n%s\n",condition);
+	
+		if(condition_integerValue(condition,semicolon)==1){
+			bigO[bigOLen]='n';
+		}else{
+			bigO[bigOLen]='$';
+		}
+		bigOLen++;
 		
-		cwhile=0;//parametrenin hangi loop iï¿½in kullanildigini anlamak iï¿½in.
-		printf("\n\n!!!!UYARI: calculating_bigO fonksiyonunda cwhile=0 yapildi.!!!!!\n");	
+		cwhile=0;//parametrenin hangi loop iï¿½in kullanildigini anlamak iï¿½in.	
 			
 	}else if(cfor==0&&cwhile==0&&cdoWhile!=0){
 	
@@ -247,24 +244,43 @@ void calculating_BigO(char *bigO,char *parameters){
 					j++;
 				}
 		}
-				
-		printf("\n%s\n",condition);
+		condition[j]='\0';
+		printf("%s\n",condition);
+		if(condition_integerValue(condition,semicolon)==1){
+			bigO[bigOLen]='n';
+		}else{
+			bigO[bigOLen]='$';
+		}
+		bigOLen++;
 		
-		cdoWhile=0;//parametrenin hangi loop iï¿½in kullanildigini anlamak iï¿½in.
-		printf("\n\n!!!!UYARI: calculating_bigO fonksiyonunda cdoWhile=0 yapildi.!!!!!\n");	
+		cdoWhile=0;//parametrenin hangi loop iï¿½in kullanildigini anlamak iï¿½in.	
 	
 	}
-	
+	bigO[bigOLen]='\0';
 	free(condition);
 }
 
 int main(){
 	
     char *bigO=(char*)malloc(DATA_SIZE*(sizeof(char)));
+    bigO[0]='1';
+    bigOLen++;
 	reading_file();
 	time_spent();
     counting_keywords(bigO);
     
+    int i=0;
+    printf("\n\nZaman Karmasikligi:\n");
+    for(i=0;bigO[i]!='\0';i++){
+    	if(i==0&&bigO[i]=='$'){
+    		printf("logn");
+		}else if(i==0&&bigO[i]!='$'){
+			printf("%c",bigO[i]);
+		}else if(i!=0&&bigO[i]=='$'){
+			printf("*logn");	
+		}
+	}
+	
     free(bigO);
   return 0;
 }
