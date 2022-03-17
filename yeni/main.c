@@ -104,7 +104,6 @@ void counting_keywords(char *bigO){
 					printf("%d \n",ftell(from));
 					printf("\n%d\n",cdoWhile);
 					if(cdoWhile!=0){
-						fscanf(from,"%s",kod);
 						for(i=0;kod[i]!=';';i++){
 							parameters[i]=kod[i];
 						}
