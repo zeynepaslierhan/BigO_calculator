@@ -263,7 +263,7 @@ void calculating_BigO(char *bigO,char *parameters){
 int main(){
 	
     char *bigO=(char*)malloc(DATA_SIZE*(sizeof(char)));
-    bigO[0]='1';
+    bigO[bigOLen]='1';
     bigOLen++;
 	reading_file();
 	time_spent();
@@ -271,15 +271,9 @@ int main(){
     
     int i=0;
     printf("\n\nZaman Karmasikligi:\n");
-    for(i=0;bigO[i]!='\0';i++){
-    	if(i==0&&bigO[i]=='$'){
-    		printf("logn");
-		}else if(i==0&&bigO[i]!='$'){
-			printf("%c",bigO[i]);
-		}else if(i!=0&&bigO[i]=='$'){
-			printf("*logn");	
-		}
-	}
+
+	printf("%s",bigO);
+
 	
     free(bigO);
   return 0;
