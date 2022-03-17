@@ -196,9 +196,14 @@ void calculating_BigO(char *bigO,char *parameters){
 				}
 		}
 		if(condition_integerValue(condition,semicolon)==1){
-			bigO[bigOLen]='n';
+			bigO[bigOLen]='*';
+			bigO[++bigOLen]='n';
 		}else{
-			bigO[bigOLen]='$';
+			bigO[bigOLen]='*';
+			bigO[++bigOLen]='l';
+			bigO[++bigOLen]='o';
+			bigO[++bigOLen]='g';
+			bigO[++bigOLen]='n';
 		}
 		bigOLen++;
 		
@@ -223,9 +228,14 @@ void calculating_BigO(char *bigO,char *parameters){
 		}
 	
 		if(condition_integerValue(condition,semicolon)==1){
-			bigO[bigOLen]='n';
+			bigO[bigOLen]='*';
+			bigO[++bigOLen]='n';
 		}else{
-			bigO[bigOLen]='$';
+			bigO[bigOLen]='*';
+			bigO[++bigOLen]='l';
+			bigO[++bigOLen]='o';
+			bigO[++bigOLen]='g';
+			bigO[++bigOLen]='n';
 		}
 		bigOLen++;
 		
@@ -247,9 +257,14 @@ void calculating_BigO(char *bigO,char *parameters){
 		condition[j]='\0';
 		printf("%s\n",condition);
 		if(condition_integerValue(condition,semicolon)==1){
-			bigO[bigOLen]='n';
+			bigO[bigOLen]='*';
+			bigO[++bigOLen]='n';
 		}else{
-			bigO[bigOLen]='$';
+			bigO[bigOLen]='*';
+			bigO[++bigOLen]='l';
+			bigO[++bigOLen]='o';
+			bigO[++bigOLen]='g';
+			bigO[++bigOLen]='n';
 		}
 		bigOLen++;
 		
