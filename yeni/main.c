@@ -56,15 +56,16 @@ void counting_keywords(char *bigO){
 	char *kod=(char*)malloc(DATA_SIZE*sizeof(char));
 	char *keywords=(char*)malloc(DATA_SIZE*sizeof(char));
 	char *parameters=(char*)malloc(DATA_SIZE*sizeof(char));
+	char *fonksiyon_ismi=(char*)malloc(DATA_SIZE*sizeof(char));
 
-	FILE *from = fopen("doWhile.txt","r");
+	FILE *from = fopen("recursive.txt","r");
     if (from == NULL)
     {
         printf("\nError: could not open file %s\n", "doWhile.txt");
     }else{
-		int i=0;
+		int i=0, kontrol=0;
 		fseek(from,0,SEEK_END);
-		printf("%d \n",ftell(from));
+		printf("\nbu dosya su kadar karakter icerir: %d \n",ftell(from));
 		rewind(from);
 		
 		while(fscanf(from,"%s",kod)!=EOF){
@@ -84,7 +85,7 @@ void counting_keywords(char *bigO){
 						}
 						printf("%s\n",parameters);
 						calculating_BigO(bigO,parameters);
-							
+					kontrol++;		
 					}
 				}else if(keywords[0]=='w'&&keywords[1]=='h'&&keywords[2]=='i'&&keywords[3]=='l'&&keywords[4]=='e'){
 					cwhile++;
@@ -98,10 +99,11 @@ void counting_keywords(char *bigO){
 						printf("%s\n",parameters);
 						calculating_BigO(bigO,parameters);
 					}
+					kontrol++;
 					
 				}else if(keywords[0]=='}'&&keywords[1]=='w'&&keywords[2]=='h'&&keywords[3]=='i'&&keywords[4]=='l'&&keywords[5]=='e'){
 					cdoWhile++;
-					printf("%d \n",ftell(from));
+					printf("\ndoWhile komutunun bittigi karakter: %d \n",ftell(from));
 					printf("\n%d\n",cdoWhile);
 					if(cdoWhile!=0){
 						for(i=0;kod[i]!=';';i++){
@@ -110,9 +112,34 @@ void counting_keywords(char *bigO){
 						printf("%s\n",parameters);
 						calculating_BigO(bigO,parameters);
 					}
+					kontrol++;
+				}
+		}
+		if(kontrol==0){
+			free(kod);
+			rewind(from);
+			for(kod=getc(from);kod!=')';kod=getc(from)){
+				if(kod!='>'){
+					fonksiyon_ismi[i]=kod;
+					i++;
+				}else if(kod=='>'){
+					i=0;
+					free(fonksiyon_ismi);
 				}
 			}
+			fonksiyon_ismi[i]='\0';
+			printf("\nRecursive fonksiyonun döndürdügü deger, ismi ve parametresi: %s)\n",fonksiyon_ismi);
+			free(kod);
+			free(keywords);
+			
+			
 		}
+			
+	
+		fclose(from);
+		}
+	
+	
 	free(parameters);
 	free(kod);
 	free(keywords);
