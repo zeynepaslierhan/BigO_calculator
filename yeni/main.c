@@ -106,10 +106,13 @@ void counting_keywords(char *bigO){
 					printf("\ndoWhile komutunun bittigi karakter: %d \n",ftell(from));
 					printf("\n%d\n",cdoWhile);
 					if(cdoWhile!=0){
+						fscanf(from,"%s",kod);
 						for(i=0;kod[i]!=';';i++){
 							parameters[i]=kod[i];
 						}
 						printf("%s\n",parameters);
+
+						
 						calculating_BigO(bigO,parameters);
 					}
 					kontrol++;
