@@ -4,7 +4,7 @@
 #include <time.h>
 #define DATA_SIZE 100
 
-static int cfor=0,cwhile=0,cdoWhile=0,bigOLen=0,yildiz=0;
+static int cfor=0,cwhile=0,cdoWhile=0,bigOLen=0,yildiz=0,cwhile2=0;
 
 FILE *open_file(char *fileName){
 	
@@ -90,17 +90,31 @@ void counting_keywords(char *bigO,FILE *from){//dongünün hangisi olduguna karar 
 					}
 				}else if(keywords[0]=='w'&&keywords[1]=='h'&&keywords[2]=='i'&&keywords[3]=='l'&&keywords[4]=='e'){
 					cwhile++;
+					cwhile2++;
 					printf("\nWhile\n");
 					printf("Kosul ve islemi:\n");
+					for(i=6;keywords[i]!=')';i++){
+						printf("%c",keywords[i]);
+					}
+					printf(" ");
 					if(cwhile!=0){
 						while(fscanf(from,"%s",kod)!=EOF){
-							if(kod[0]=='i'&&kod[1]=='='){
+							if(kod[0]=='i'&&kod[1]=='='&&cwhile2==1){
 								kontrol2++;
 								break;
-							}else if(kod[0]=='i'&&kod[1]=='+'){
+							}else if(kod[0]=='i'&&kod[1]=='+'&&cwhile2==1){
 								kontrol2++;
 								break;
-							}else if(kod[0]=='i'&&kod[1]=='-'){
+							}else if(kod[0]=='i'&&kod[1]=='-'&&cwhile2==1){
+								kontrol2++;
+								break;
+							}else if(kod[0]=='j'&&kod[1]=='='&&cwhile2==2){
+								kontrol2++;
+								break;
+							}else if(kod[0]=='j'&&kod[1]=='+'&&cwhile2==2){
+								kontrol2++;
+								break;
+							}else if(kod[0]=='j'&&kod[1]=='-'&&cwhile2==2){
 								kontrol2++;
 								break;
 							}
@@ -110,7 +124,8 @@ void counting_keywords(char *bigO,FILE *from){//dongünün hangisi olduguna karar 
 								parameters[i]=kod[i];
 							}
 						}
-						parameters[i]='$';
+						
+						parameters[i]='\0';
 						printf("%s\n",parameters);
 						calculating_BigO(bigO,parameters);
 					}
@@ -162,19 +177,15 @@ void calculating_BigO(char *bigO,char *parameters){//dongudeki parametre ve isle
 		
 		for(i=0;parameters[i]!='\0';i++){//for parametresi iï¿½in
 				if(semicolon!=1&&semicolon!=2&&parameters[i]!=';'&&parameters[i]!='('){
-					printf("%c",parameters[i]);
 					continue;
 				}else if(parameters[i]==';'){
-					printf(" %c ",parameters[i]);
 					semicolon++;
 					continue;
 				}else if(semicolon==1){
-					printf("%c",parameters[i]);
 					continue;
 				}else if(semicolon==2){
 					if(parameters[i]!=')'){
 						condition[j]=parameters[i];
-						printf("%c",condition[j]);
 						j++;
 					}else{
 						condition[j]='$';//for dï¿½ngï¿½sï¿½ndeki kosul ile islemi condition dizisinde birbirinden ayrildi.
