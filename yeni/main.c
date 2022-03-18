@@ -143,8 +143,6 @@ void counting_keywords(char *bigO){
 	free(keywords);
 }
 
-
-
 int condition_integerValue(char *condition, int semicolon){
 
 	int i=0;
