@@ -1,16 +1,14 @@
 #include <stdio.h>
-int main(){
-	int i,j;
-	int sum = 0;
-	int n=10;
-	int arr[n][n];
-	for (i=0;i<n;i/2){
-		for (j=0;j<n;j++){
-		    arr[i][j]=i*j;
-			sum = sum + arr[i][j];
-		}
-	}
-        printf("%d", sum);	
-        return 0;
-        
+#include <stdlib.h>
+int main()
+{
+    int count=10,i,n=10;
+    int arr[n];
+    i=1;
+    do{
+        arr[i]=i*count;
+        printf("%d * %d = %d\n",i,count,i*count);
+        i++;
+    }while(i<=n);
+    return 0;
 }
