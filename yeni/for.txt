@@ -1,6 +1,6 @@
 #include <stdio.h>
 int main(){
-	int i,j;
+	double i,j,sum = 0,n=10;
 	int sum = 0;
 	int n=10;
 	int arr[n][n];

@@ -89,7 +89,13 @@ void recursive_fonk(FILE *from,char *bigO){
 	yildiz++;
 	bigO[++bigOLen]='n';
 	bigOLen++;	
-
+	bigO[bigOLen]='\0';
+	
+	printf("\n\nZaman Karmasikligi:\n");
+	print_bigO(bigO);
+	printf("\n\nYer Karmasikligi:\n");
+	fseek(from,150,SEEK_SET);
+	space_complexity(from,bigO);
 		
 	free(fonksiyon);
 	free(fonksiyon_ismi);
@@ -318,7 +324,62 @@ int condition_integerValue(char *condition){//dongüdeki islemlerin ne olduguna k
 	
 }
 
+int virgul(char *kod,FILE *from){
+	int i=0,virSayisi=0;
+	fscanf(from,"%s",kod);
+	for(i=0;kod[i]!=';';i++){
+		if(kod[i]==','){
+			virSayisi++;
+		}
+	}
+	return virSayisi;
+}
 
+void space_complexity(FILE *from,char *bigO){
+	
+	char *kod=(char*)malloc(DATA_SIZE*sizeof(char));
+	char *variables=(char*)malloc(DATA_SIZE*sizeof(char));
+	
+	rewind(from);
+	int cint=0,cfloat=0,cchar=0,cdouble=0;
+	int i=0,j=0,v=0;
+	while(fscanf(from,"%s",kod)!=EOF){
+		if(strcmp(kod,"int")==0){
+			cint++;
+			v=virgul(kod,from);
+			printf("\n4*");
+			print_bigO(bigO);
+			printf("+%d",(v+1)*4);
+			break;
+		}else if(strcmp(kod,"float")==0){
+			cfloat++;
+			v=virgul(kod,from);
+			printf("\n4*");
+			print_bigO(bigO);
+			printf("+%d",(v+1)*4);
+			break;
+		}else if(strcmp(kod,"char")==0){
+			cchar++;
+			v=virgul(kod,from);
+			print_bigO(bigO);
+			printf("+%d",(v+1)*1);
+			break;
+		}else if(strcmp(kod,"double")==0){
+			cdouble++;
+			v=virgul(kod,from);
+			printf("\n8*");
+			print_bigO(bigO);
+			printf("+%d",(v+1)*8);
+			break;
+		}
+	}
+	
+	
+	
+	
+	fclose(kod);	
+	fclose(variables);
+}
 
 void print_bigO(char *bigO){
 	
@@ -353,17 +414,19 @@ int main(){
     reading_file(from);
 	time_spent();
 	if(strcmp(cevap,"hayir")==0){
+		
 		counting_keywords(bigO,from);
+		bigO[bigOLen]='\0';
+		printf("\n\nZaman Karmasikligi:\n");
+		print_bigO(bigO);
+		printf("\n\nYer Karmasikligi:\n");
+		fseek(from,30,SEEK_SET);
+		space_complexity(from,bigO);
 	}else if(strcmp(cevap,"evet")==0){
 		recursive_fonk(from,bigO);
 	}
 	
-	bigO[bigOLen]='\0';
-	printf("\n\nZaman Karmasikligi:\n");
-	print_bigO(bigO);
-	printf("\n\nYer Karmasikligi:\n");
-	printf("4*");
-	print_bigO(bigO);
+	
 	
 	free(cevap);
     free(bigO);

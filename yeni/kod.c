@@ -1,16 +1,14 @@
 #include <stdio.h>
+int factorial (int n) {    
+    if (n <= 1) 
+        return 1 ;
+    else
+        return n * factorial(n-1);
+}
 int main(){
-	int i,j;
-	int sum = 0;
-	int n=10;
-	int arr[n][n];
-	for (i=0;i<n;i/2){
-		for (j=0;j<n;j++){
-		    arr[i][j]=i*j;
-			sum = sum + arr[i][j];
-		}
-	}
-        printf("%d", sum);	
-        return 0;
+    int sonuc,n=6;
+    sonuc=factorial(n);
+    printf("%d", sonuc);	
+    return 0;
         
 }
