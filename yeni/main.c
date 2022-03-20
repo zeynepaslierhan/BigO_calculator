@@ -4,7 +4,7 @@
 #include <time.h>
 #define DATA_SIZE 100
 
-static int cfor=0,cwhile=0,cdoWhile=0,bigOLen=0,yildiz=0,cwhile2=0;
+static int cfor=0,cwhile=0,cdoWhile=0,bigOLen=0,yildiz=0,cwhile2=0,cdoWhile2=0;
 
 FILE *open_file(char *fileName){
 	
@@ -59,14 +59,16 @@ void reading_file(FILE *from){
 	}
 }
 
+
 void counting_keywords(char *bigO,FILE *from){//dongünün hangisi olduguna karar verme
 	
 	char *kod=(char*)malloc(DATA_SIZE*sizeof(char));
 	char *keywords=(char*)malloc(DATA_SIZE*sizeof(char));
 	char *parameters=(char*)malloc(DATA_SIZE*sizeof(char));
 	char *fonksiyon_ismi=(char*)malloc(DATA_SIZE*sizeof(char));
+	char *fonksiyon=(char*)malloc(DATA_SIZE*sizeof(char));
 	
-	int i=0, kontrol=0, kontrol2=0;
+	int i=0,kontrol2=0,kontrol=0,temp=0;
 	fseek(from,0,SEEK_END);
 	printf("\n\nIcerdigi karakter sayisi: %d \n",ftell(from));
 	rewind(from);
@@ -86,7 +88,7 @@ void counting_keywords(char *bigO,FILE *from){//dongünün hangisi olduguna karar 
 						}
 						printf("\n%s\n",parameters);
 						calculating_BigO(bigO,parameters);
-					kontrol++;		
+						kontrol++;
 					}
 				}else if(keywords[0]=='w'&&keywords[1]=='h'&&keywords[2]=='i'&&keywords[3]=='l'&&keywords[4]=='e'){
 					cwhile++;
@@ -117,6 +119,47 @@ void counting_keywords(char *bigO,FILE *from){//dongünün hangisi olduguna karar 
 							}else if(kod[0]=='j'&&kod[1]=='-'&&cwhile2==2){
 								kontrol2++;
 								break;
+							}else if(kod[0]=='k'&&kod[1]=='='&&cwhile2==3){
+								kontrol2++;
+								break;
+							}else if(kod[0]=='k'&&kod[1]=='+'&&cwhile2==3){
+								kontrol2++;
+								break;
+							}else if(kod[0]=='k'&&kod[1]=='-'&&cwhile2==3){
+								kontrol2++;
+								break;
+							}
+						}
+						if(kontrol2!=0){
+							for(i=0;kod[i]!=';';i++){
+								parameters[i]=kod[i];
+							}
+						}
+						
+						parameters[i]='\0';
+						printf("%s\n",parameters);
+						calculating_BigO(bigO,parameters);
+						
+					}
+					kontrol++;
+					
+				}else if(keywords[0]=='}'&&keywords[1]=='w'&&keywords[2]=='h'&&keywords[3]=='i'&&keywords[4]=='l'&&keywords[5]=='e'){
+					cdoWhile++;
+					printf("\nDo While\n");
+					printf("Kosul ve islemi:\n");
+					temp=ftell(from);
+					rewind(from);
+					if(cwhile!=0){
+						while(fscanf(from,"%s",kod)!=EOF){
+							if(kod[0]=='i'&&kod[1]=='='){
+								kontrol2++;
+								break;
+							}else if(kod[0]=='i'&&kod[1]=='+'){
+								kontrol2++;
+								break;
+							}else if(kod[0]=='i'&&kod[1]=='-'){
+								kontrol2++;
+								break;
 							}
 						}
 						if(kontrol2!=0){
@@ -129,18 +172,7 @@ void counting_keywords(char *bigO,FILE *from){//dongünün hangisi olduguna karar 
 						printf("%s\n",parameters);
 						calculating_BigO(bigO,parameters);
 					}
-					kontrol++;
-					
-				}else if(keywords[0]=='}'&&keywords[1]=='w'&&keywords[2]=='h'&&keywords[3]=='i'&&keywords[4]=='l'&&keywords[5]=='e'){
-					cdoWhile++;
-					printf("\nDo While\n");
-					printf("Kosul ve islemi:\n");
-					if(cdoWhile!=0){
-						for(i=0;kod[i]!=';';i++){
-							parameters[i]=kod[i];
-						}
-						calculating_BigO(bigO,parameters);
-					}
+					fseek(from,temp,SEEK_CUR);//do While basina doner
 					kontrol++;
 				}
 		}
@@ -149,23 +181,44 @@ void counting_keywords(char *bigO,FILE *from){//dongünün hangisi olduguna karar 
 			rewind(from);
 			for(kod=getc(from);kod!=')';kod=getc(from)){
 				if(kod!='>'){
-					fonksiyon_ismi[i]=kod;
+					fonksiyon[i]=kod;
 					i++;
 				}else if(kod=='>'){
 					i=0;
-					free(fonksiyon_ismi);
+					free(fonksiyon);
 				}
 			}
-			fonksiyon_ismi[i]='\0';
-			printf("\nRecursive fonksiyonun döndürdügü deger, ismi ve parametresi: %s)\n",fonksiyon_ismi);
-			free(kod);
-			free(keywords);
-				
+			fonksiyon[i]='\0';
+			int j=0;
+			printf("\nRecursive fonksiyonun döndürdügü deger, ismi ve parametresi: \n %s)\n",fonksiyon);
+			for(i=0;fonksiyon[i]!='\0';i++){
+				if(fonksiyon[i]!=' '&&fonksiyon[i]!='('){
+					fonksiyon_ismi[j]=fonksiyon[i];
+					j++;
+				}else if(strcmp(fonksiyon_ismi,"\nint")==0||strcmp(fonksiyon_ismi,"\nvoid")== 0){
+					j=0;
+				}else if(fonksiyon[i]=='('){
+					break;
+				}
+			}
+			fonksiyon_ismi[j]='\0';
+			if(strcmp(fonksiyon_ismi,"main")!=0){
+				bigO[bigOLen]='*';
+				yildiz++;
+				bigO[++bigOLen]='n';
+				bigO[++bigOLen]='*';
+				yildiz++;
+				bigO[++bigOLen]='n';
+				bigOLen++;
+			}
 		}	
-	
+	print_bigO(bigO);
+	free(fonksiyon);
+	free(fonksiyon_ismi);
 	free(parameters);
 	free(kod);
 	free(keywords);
+	free(fonksiyon_ismi);
 }
 
 void calculating_BigO(char *bigO,char *parameters){//dongudeki parametre ve islemlerin ayristirilmasi
@@ -205,25 +258,11 @@ void calculating_BigO(char *bigO,char *parameters){//dongudeki parametre ve isle
 			
 	}else if(cfor==0&&cwhile==0&&cdoWhile!=0){
 	
-		for(i=0;parameters[i]!=')';i++){//for parametresi iï¿½in
-				if(parameters[i]!='('&&kontrol==0){
-					i++;
-					continue;
-				}else if(parameters[i]=='('){
-					kontrol++;
-				}else{
-					condition[j]=parameters[i];
-					j++;
-				}
-		}
-		condition[j]='\0';
-		printf("%s\n",condition);
-		save_bigO(bigO,condition);
+		save_bigO(bigO,parameters);
 		
 		cdoWhile=0;//parametrenin hangi loop iï¿½in kullanildigini anlamak iï¿½in.	
 	
 	}
-	bigO[bigOLen]='\0';
 	free(condition);
 }
 
@@ -260,6 +299,9 @@ int condition_integerValue(char *condition){//dongüdeki islemlerin ne olduguna k
 }
 
 void print_bigO(char *bigO){
+	
+	bigO[bigOLen]='\0';
+	printf("\n\nZaman Karmasikligi:\n");
 	int i=0;
 	if(yildiz==0){
 		printf("%s",bigO);
@@ -268,6 +310,16 @@ void print_bigO(char *bigO){
 			printf("%c",bigO[i]);
 		}
 	}
+	printf("\n\nYer Karmasikligi:\n");
+	printf("4*");
+	if(yildiz==0){
+		printf("%s",bigO);
+	}else{
+		for(i=2;i<bigOLen;i++){
+			printf("%c",bigO[i]);
+		}
+	}
+	
 }
 
 int main(){
@@ -285,15 +337,6 @@ int main(){
 	reading_file(from);
 	time_spent();
     counting_keywords(bigO,from);
-    
-    
-    
-	printf("\n\nZaman Karmasikligi:\n");
-	print_bigO(bigO);
-	printf("\n\nYer Karmasikligi:\n");
-	printf("4*");
-	print_bigO(bigO);
-	
     free(bigO);
     fclose(from);
   return 0;
