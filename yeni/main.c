@@ -94,8 +94,8 @@ void recursive_fonk(FILE *from,char *bigO){
 	printf("\n\nZaman Karmasikligi:\n");
 	print_bigO(bigO);
 	printf("\n\nYer Karmasikligi:\n");
-	fseek(from,150,SEEK_SET);
-	space_complexity(from,bigO);
+	printf("\n4*");
+	print_bigO(bigO);
 		
 	free(fonksiyon);
 	free(fonksiyon_ismi);
