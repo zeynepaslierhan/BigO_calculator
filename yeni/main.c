@@ -90,7 +90,6 @@ void recursive_fonk(FILE *from,char *bigO){
 	bigO[++bigOLen]='n';
 	bigOLen++;	
 
-	print_bigO(bigO);
 		
 	free(fonksiyon);
 	free(fonksiyon_ismi);
@@ -236,8 +235,7 @@ void counting_keywords(char *bigO,FILE *from){//dongünün hangisi olduguna karar 
 					fseek(from,temp,SEEK_SET);
 				}
 		}
-		
-	print_bigO(bigO);
+	
 	free(parameters);
 	free(kod);
 	free(keywords);
@@ -320,22 +318,11 @@ int condition_integerValue(char *condition){//dongüdeki islemlerin ne olduguna k
 	
 }
 
+
+
 void print_bigO(char *bigO){
 	
-	bigO[bigOLen]='\0';
-	printf("\n\nZaman Karmasikligi:\n");
 	int i=0;
-	printf("O(");
-	if(yildiz==0){
-		printf("%s",bigO);
-	}else{
-		for(i=2;i<bigOLen;i++){
-			printf("%c",bigO[i]);
-		}
-	}
-	printf(")");
-	printf("\n\nYer Karmasikligi:\n");
-	printf("4*");
 	printf("O(");
 	if(yildiz==0){
 		printf("%s",bigO);
@@ -370,6 +357,13 @@ int main(){
 	}else if(strcmp(cevap,"evet")==0){
 		recursive_fonk(from,bigO);
 	}
+	
+	bigO[bigOLen]='\0';
+	printf("\n\nZaman Karmasikligi:\n");
+	print_bigO(bigO);
+	printf("\n\nYer Karmasikligi:\n");
+	printf("4*");
+	print_bigO(bigO);
 	
 	free(cevap);
     free(bigO);
