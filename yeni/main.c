@@ -145,12 +145,18 @@ void counting_keywords(char *bigO,FILE *from){//dongünün hangisi olduguna karar 
 					
 				}else if(keywords[0]=='}'&&keywords[1]=='w'&&keywords[2]=='h'&&keywords[3]=='i'&&keywords[4]=='l'&&keywords[5]=='e'){
 					cdoWhile++;
+					cdoWhile2++;
 					printf("\nDo While\n");
 					printf("Kosul ve islemi:\n");
+					
+					for(i=7;kod[i]!=')';i++){
+						printf("%c",kod[i]);
+					}
 					temp=ftell(from);
-					rewind(from);
-					if(cwhile!=0){
-						while(fscanf(from,"%s",kod)!=EOF){
+					
+					fseek(from,temp-25,SEEK_SET);
+					
+					while(fscanf(from,"%s",kod)!=EOF){
 							if(kod[0]=='i'&&kod[1]=='='){
 								kontrol2++;
 								break;
@@ -160,20 +166,38 @@ void counting_keywords(char *bigO,FILE *from){//dongünün hangisi olduguna karar 
 							}else if(kod[0]=='i'&&kod[1]=='-'){
 								kontrol2++;
 								break;
-							}
-						}
-						if(kontrol2!=0){
-							for(i=0;kod[i]!=';';i++){
-								parameters[i]=kod[i];
+							}else if(kod[0]=='j'&&kod[1]=='='){
+								kontrol2++;
+								break;
+							}else if(kod[0]=='j'&&kod[1]=='+'){
+								kontrol2++;
+								break;
+							}else if(kod[0]=='j'&&kod[1]=='-'){
+								kontrol2++;
+								break;
+							}else if(kod[0]=='k'&&kod[1]=='='){
+								kontrol2++;
+								break;
+							}else if(kod[0]=='k'&&kod[1]=='+'){
+								kontrol2++;
+								break;
+							}else if(kod[0]=='k'&&kod[1]=='-'){
+								kontrol2++;
+								break;
 							}
 						}
 						
-						parameters[i]='\0';
-						printf("%s\n",parameters);
-						calculating_BigO(bigO,parameters);
+					if(kontrol2!=0){
+						for(i=0;kod[i]!=';';i++){
+							parameters[i]=kod[i];
+						}
 					}
-					fseek(from,temp,SEEK_CUR);//do While basina doner
+						
+					parameters[i]='\0';
+					printf(" %s\n",parameters);
+					calculating_BigO(bigO,parameters);
 					kontrol++;
+					fseek(from,temp,SEEK_SET);
 				}
 		}
 		if(kontrol==0){
@@ -303,6 +327,7 @@ void print_bigO(char *bigO){
 	bigO[bigOLen]='\0';
 	printf("\n\nZaman Karmasikligi:\n");
 	int i=0;
+	printf("O(");
 	if(yildiz==0){
 		printf("%s",bigO);
 	}else{
@@ -310,8 +335,10 @@ void print_bigO(char *bigO){
 			printf("%c",bigO[i]);
 		}
 	}
+	printf(")");
 	printf("\n\nYer Karmasikligi:\n");
 	printf("4*");
+	printf("O(");
 	if(yildiz==0){
 		printf("%s",bigO);
 	}else{
@@ -319,6 +346,7 @@ void print_bigO(char *bigO){
 			printf("%c",bigO[i]);
 		}
 	}
+	printf(")");
 	
 }
 

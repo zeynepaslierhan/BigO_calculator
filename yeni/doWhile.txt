@@ -8,6 +8,11 @@ int main()
     do{
         arr[i]=i*count;
         printf("%d * %d = %d\n",i,count,i*count);
+do{
+        arr[i]=i*count;
+        printf("%d * %d = %d\n",i,count,i*count);
+        j++;
+    }while(j<=n);
         i++;
     }while(i<=n);
     return 0;
