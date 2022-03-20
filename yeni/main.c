@@ -59,21 +59,58 @@ void reading_file(FILE *from){
 	}
 }
 
+void recursive_fonk(FILE *from,char *bigO){
+	
+	char *kod=(char*)malloc(DATA_SIZE*sizeof(char));
+	char *parameters=(char*)malloc(DATA_SIZE*sizeof(char));
+	char *fonksiyon_ismi=(char*)malloc(DATA_SIZE*sizeof(char));
+	char *fonksiyon=(char*)malloc(DATA_SIZE*sizeof(char));
+	
+	int i=0;
+	rewind(from);
+	for(kod=getc(from);kod!=')';kod=getc(from)){
+		if(kod!='>'){
+			fonksiyon[i]=kod;
+			i++;
+		}else if(kod=='>'){
+			i=0;
+			free(fonksiyon);
+		}
+	}
+	fonksiyon[i]='\0';
+			
+	int j=0;
+	printf("\nRecursive fonksiyonun; döndürdügü deger, ismi ve parametresi: \n %s)\n",fonksiyon);
+	
+	bigO[bigOLen]='*';
+	yildiz++;		
+	bigO[++bigOLen]='n';
+	bigO[++bigOLen]='*';
+	yildiz++;
+	bigO[++bigOLen]='n';
+	bigOLen++;	
+
+	print_bigO(bigO);
+		
+	free(fonksiyon);
+	free(fonksiyon_ismi);
+	free(parameters);
+	free(kod);
+	free(fonksiyon_ismi);
+}
 
 void counting_keywords(char *bigO,FILE *from){//dongünün hangisi olduguna karar verme
 	
 	char *kod=(char*)malloc(DATA_SIZE*sizeof(char));
 	char *keywords=(char*)malloc(DATA_SIZE*sizeof(char));
 	char *parameters=(char*)malloc(DATA_SIZE*sizeof(char));
-	char *fonksiyon_ismi=(char*)malloc(DATA_SIZE*sizeof(char));
-	char *fonksiyon=(char*)malloc(DATA_SIZE*sizeof(char));
 	
-	int i=0,kontrol2=0,kontrol=0,temp=0;
+	int i=0,kontrol2=0,kontrol=0,kontrol1=0,temp=0;
 	fseek(from,0,SEEK_END);
 	printf("\n\nIcerdigi karakter sayisi: %d \n",ftell(from));
 	rewind(from);
 		
-		while(fscanf(from,"%s",kod)!=EOF){
+	while(fscanf(from,"%s",kod)!=EOF){
 				for(i=0;kod[i]!='\0';i++){
 					keywords[i]=kod[i];
 				}
@@ -153,39 +190,38 @@ void counting_keywords(char *bigO,FILE *from){//dongünün hangisi olduguna karar 
 						printf("%c",kod[i]);
 					}
 					temp=ftell(from);
-					
 					fseek(from,temp-25,SEEK_SET);
 					
 					while(fscanf(from,"%s",kod)!=EOF){
-							if(kod[0]=='i'&&kod[1]=='='){
-								kontrol2++;
-								break;
-							}else if(kod[0]=='i'&&kod[1]=='+'){
-								kontrol2++;
-								break;
-							}else if(kod[0]=='i'&&kod[1]=='-'){
-								kontrol2++;
-								break;
-							}else if(kod[0]=='j'&&kod[1]=='='){
-								kontrol2++;
-								break;
-							}else if(kod[0]=='j'&&kod[1]=='+'){
-								kontrol2++;
-								break;
-							}else if(kod[0]=='j'&&kod[1]=='-'){
-								kontrol2++;
-								break;
-							}else if(kod[0]=='k'&&kod[1]=='='){
-								kontrol2++;
-								break;
-							}else if(kod[0]=='k'&&kod[1]=='+'){
-								kontrol2++;
-								break;
-							}else if(kod[0]=='k'&&kod[1]=='-'){
-								kontrol2++;
-								break;
-							}
+						if(kod[0]=='i'&&kod[1]=='='){
+							kontrol2++;
+							break;
+						}else if(kod[0]=='i'&&kod[1]=='+'){
+							kontrol2++;
+							break;
+						}else if(kod[0]=='i'&&kod[1]=='-'){
+							kontrol2++;
+							break;
+						}else if(kod[0]=='j'&&kod[1]=='='){
+							kontrol2++;
+							break;
+						}else if(kod[0]=='j'&&kod[1]=='+'){
+							kontrol2++;
+							break;
+						}else if(kod[0]=='j'&&kod[1]=='-'){
+							kontrol2++;
+							break;
+						}else if(kod[0]=='k'&&kod[1]=='='){
+							kontrol2++;
+							break;
+						}else if(kod[0]=='k'&&kod[1]=='+'){
+							kontrol2++;
+							break;
+						}else if(kod[0]=='k'&&kod[1]=='-'){
+							kontrol2++;
+							break;
 						}
+					}
 						
 					if(kontrol2!=0){
 						for(i=0;kod[i]!=';';i++){
@@ -200,49 +236,11 @@ void counting_keywords(char *bigO,FILE *from){//dongünün hangisi olduguna karar 
 					fseek(from,temp,SEEK_SET);
 				}
 		}
-		if(kontrol==0){
-			free(kod);
-			rewind(from);
-			for(kod=getc(from);kod!=')';kod=getc(from)){
-				if(kod!='>'){
-					fonksiyon[i]=kod;
-					i++;
-				}else if(kod=='>'){
-					i=0;
-					free(fonksiyon);
-				}
-			}
-			fonksiyon[i]='\0';
-			int j=0;
-			printf("\nRecursive fonksiyonun döndürdügü deger, ismi ve parametresi: \n %s)\n",fonksiyon);
-			for(i=0;fonksiyon[i]!='\0';i++){
-				if(fonksiyon[i]!=' '&&fonksiyon[i]!='('){
-					fonksiyon_ismi[j]=fonksiyon[i];
-					j++;
-				}else if(strcmp(fonksiyon_ismi,"\nint")==0||strcmp(fonksiyon_ismi,"\nvoid")== 0){
-					j=0;
-				}else if(fonksiyon[i]=='('){
-					break;
-				}
-			}
-			fonksiyon_ismi[j]='\0';
-			if(strcmp(fonksiyon_ismi,"main")!=0){
-				bigO[bigOLen]='*';
-				yildiz++;
-				bigO[++bigOLen]='n';
-				bigO[++bigOLen]='*';
-				yildiz++;
-				bigO[++bigOLen]='n';
-				bigOLen++;
-			}
-		}	
+		
 	print_bigO(bigO);
-	free(fonksiyon);
-	free(fonksiyon_ismi);
 	free(parameters);
 	free(kod);
 	free(keywords);
-	free(fonksiyon_ismi);
 }
 
 void calculating_BigO(char *bigO,char *parameters){//dongudeki parametre ve islemlerin ayristirilmasi
@@ -357,15 +355,25 @@ int main(){
     printf("Incelemek istediginiz kodun(text dosyasi uzantisiyla) ismini giriniz:\n");
     char *fileName=(char*)malloc(DATA_SIZE*(sizeof(char)));
     scanf("%s",fileName);
+    printf("\nRecursive fonksiyon içeriyor mu?(evet veya hayir)\n");
+    char *cevap=(char*)malloc(5*(sizeof(char)));;
+    scanf("%s",cevap);
     FILE *from=open_file(fileName);
     free(fileName);
-    
 	bigO[bigOLen]='1';
     bigOLen++;
-	reading_file(from);
+    
+    reading_file(from);
 	time_spent();
-    counting_keywords(bigO,from);
+	if(strcmp(cevap,"hayir")==0){
+		counting_keywords(bigO,from);
+	}else if(strcmp(cevap,"evet")==0){
+		recursive_fonk(from,bigO);
+	}
+	
+	free(cevap);
     free(bigO);
     fclose(from);
+    
   return 0;
 }
