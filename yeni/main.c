@@ -89,13 +89,10 @@ void recursive_fonk(FILE *from,char *bigO){
 	yildiz++;
 	bigO[++bigOLen]='n';
 	bigOLen++;	
-	bigO[bigOLen]='\0';
-	
 	printf("\n\nZaman Karmasikligi:\n");
 	print_bigO(bigO);
 	printf("\n\nYer Karmasikligi:\n");
-	printf("\n4*");
-	print_bigO(bigO);
+	space_complexity(from,bigO);
 		
 	free(fonksiyon);
 	free(fonksiyon_ismi);
@@ -324,6 +321,7 @@ int condition_integerValue(char *condition){//dongüdeki islemlerin ne olduguna k
 	
 }
 
+
 int virgul(char *kod,FILE *from){
 	int i=0,virSayisi=0;
 	fscanf(from,"%s",kod);
@@ -343,6 +341,7 @@ void space_complexity(FILE *from,char *bigO){
 	rewind(from);
 	int cint=0,cfloat=0,cchar=0,cdouble=0;
 	int i=0,j=0,v=0;
+	fseek(from,25,SEEK_SET);
 	while(fscanf(from,"%s",kod)!=EOF){
 		if(strcmp(kod,"int")==0){
 			cint++;
@@ -414,19 +413,16 @@ int main(){
     reading_file(from);
 	time_spent();
 	if(strcmp(cevap,"hayir")==0){
-		
 		counting_keywords(bigO,from);
 		bigO[bigOLen]='\0';
 		printf("\n\nZaman Karmasikligi:\n");
 		print_bigO(bigO);
-		printf("\n\nYer Karmasikligi:\n");
-		fseek(from,30,SEEK_SET);
+		printf("\n\nYer Karmasikligi:");
 		space_complexity(from,bigO);
 	}else if(strcmp(cevap,"evet")==0){
 		recursive_fonk(from,bigO);
 	}
-	
-	
+
 	
 	free(cevap);
     free(bigO);

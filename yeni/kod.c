@@ -1,14 +1,10 @@
 #include <stdio.h>
-int factorial (int n) {    
-    if (n <= 1) 
-        return 1 ;
-    else
-        return n * factorial(n-1);
-}
+#include <stdlib.h>
+
 int main(){
-    int sonuc,n=6;
-    sonuc=factorial(n);
-    printf("%d", sonuc);	
+    int count=10,i,n=10;
+    int arr[n];
+    i=1;
+    
     return 0;
-        
 }
