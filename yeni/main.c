@@ -321,7 +321,6 @@ int condition_integerValue(char *condition){//dongüdeki islemlerin ne olduguna k
 	
 }
 
-
 int virgul(char *kod,FILE *from){
 	int i=0,virSayisi=0;
 	fscanf(from,"%s",kod);
